@@ -1,5 +1,5 @@
 # GRUPO11-P3
-Repo do grupo 11 para o proejto 3 da cadeira de Programação Avançada.
+Repo do grupo 11 para o projeto 3 da cadeira de Programação Avançada.
 
 
 1. Abrir pelo terminal o caminho .../GRUPO11-P3
