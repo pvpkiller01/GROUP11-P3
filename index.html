@@ -1,0 +1,118 @@
+<html lang="pt">
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Introduction to WebGL</title>
+
+    <style>
+        form {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .hidden1 {
+            display: none;
+        }
+        .hidden2 {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="gl-canvas" width="800" height="600">
+        Sorry, but your browser does not support HTML5's canvas element.
+    </canvas>
+</div>
+
+<form>
+    <label for="light-type">Light type:</label>
+    <select id="light-type" name="light-type" onchange="toggleCoordinates()">
+        <option></option>
+        <option value="point">Sun</option>
+        <option value="ambient">Ambient</option>
+        <option value="directional">Directional</option>
+        <option value="spot">Spotlight</option>
+    </select>
+    <br>
+
+    <label for="intensity">Intensity:</label>
+    <input value=0 type="text" id="intensity" name="intensity" size="2" pattern="[0-9]+">
+
+    <div id="coordinates" class="hidden1">
+    Direction:
+    <label for="direction-x">X:</label>
+    <input value=0 type="text" id="direction-x" name="direction-x" size="1" pattern="[0-9]+">
+
+    <label for="direction-y">Y:</label>
+    <input value=0 type="text" id="direction-y" name="direction-y" size="1" pattern="[0-9]+">
+
+    <label for="direction-z">Z:</label>
+    <input value=0 type="text" id="direction-z" name="direction-z" size="1" pattern="[0-9]+">
+    </div>
+    <div id="target" class="hidden2">
+        Target:
+        <label for="target-x">X:</label>
+        <input value=0 type="text" id="target-x" name="target-x" size="1" pattern="[0-9]+">
+
+        <label for="target-y">Y:</label>
+        <input value=0 type="text" id="target-y" name="target-y" size="1" pattern="[0-9]+">
+
+        <label for="target-z">Z:</label>
+        <input value=0 type="text" id="target-z" name="target-z" size="1" pattern="[0-9]+">
+
+    </div>
+
+    <button onclick="createLight()" id="create-light-btn">Add Light</button><button id="create-light-btn2" onclick="lightReducer()">Reduce Light</button>
+</form>
+
+<script src="three.js"></script>
+<script type="module" src="OBJLoader.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+    document.getElementById("create-light-btn").addEventListener("click", function(event) {
+        event.preventDefault(); // Impede o comportamento padrão do botão de envio
+
+        createLight();
+    });
+    document.getElementById("create-light-btn2").addEventListener("click", function(event) {
+        event.preventDefault(); // Impede o comportamento padrão do botão de envio
+
+        lightReducer();
+    });
+
+    function createLight() {
+        event.preventDefault();
+        lightChoice();
+    }
+    function lightReducer(){
+        event.preventDefault();
+        reduceLight();
+    }
+    function toggleCoordinates() {
+        const lightType = document.getElementById("light-type").value;
+        const coordinates = document.getElementById("coordinates");
+        const target = document.getElementById("target");
+        switch(lightType){
+            case "spot":
+                target.classList.remove("hidden2");
+                coordinates.classList.remove("hidden1");
+                break;
+            case "directional":
+                coordinates.classList.remove("hidden1")
+                target.classList.add("hidden2");
+                break;
+            case "ambient":
+                target.classList.add("hidden2");
+                coordinates.classList.add("hidden1");
+                break;
+            case "point":
+                coordinates.classList.remove("hidden1")
+                target.classList.add("hidden2")
+                break;
+        }
+
+    }
+</script>
+</body>
+</html>
